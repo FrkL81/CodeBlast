@@ -1,0 +1,5 @@
+<Solution>
+  <Project Path="CodeBlast.App/CodeBlast.App.csproj" />
+  <Project Path="CodeBlast.Core/CodeBlast.Core.csproj" />
+  <Project Path="CodeBlast.Tests/CodeBlast.Tests.csproj" />
+</Solution>
