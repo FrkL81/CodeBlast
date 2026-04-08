@@ -1,0 +1,132 @@
+<Window x:Class="CodeBlast.App.Views.SettingsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Configuración - CodeBlast" Height="520" Width="600"
+        Background="#1A1A1F"
+        WindowStartupLocation="CenterOwner"
+        WindowStyle="None"
+        AllowsTransparency="False"
+        ResizeMode="NoResize"
+        Icon="pack://application:,,,/Resources/Icon.ico">
+
+    <WindowChrome.WindowChrome>
+        <WindowChrome CaptionHeight="0" ResizeBorderThickness="5" GlassFrameThickness="0" UseAeroCaptionButtons="False"/>
+    </WindowChrome.WindowChrome>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Custom Title Bar -->
+        <Border Grid.Row="0" Background="#16161C" Height="32"
+                MouseLeftButtonDown="TitleBar_MouseLeftButtonDown">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Grid.Column="0" Text="⚙ Configuración" 
+                           Foreground="#9090A8" FontSize="12" 
+                           VerticalAlignment="Center" Margin="10,0,0,0"/>
+
+                <Button Grid.Column="1" Content="✕" Click="CloseWindow_Click"
+                        Width="46" Height="32"
+                        Background="Transparent" Foreground="#9090A8"
+                        BorderThickness="0" FontSize="13"
+                        WindowChrome.IsHitTestVisibleInChrome="True"
+                        Style="{x:Null}">
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Border x:Name="Bg" Background="Transparent">
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="Bg" Property="Background" Value="#C42B1C"/>
+                                    <Setter Property="Foreground" Value="White"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+            </Grid>
+        </Border>
+
+        <!-- Content -->
+        <Border Grid.Row="1" Background="#1A1A1F" Padding="24">
+            <StackPanel>
+                <TextBlock Text="Exclusiones" 
+                           Foreground="#E8E8F0" FontSize="16" FontWeight="SemiBold"
+                           Margin="0,0,0,16"/>
+
+                <CheckBox x:Name="RespectGitIgnoreCheckBox"
+                          Content="Respetar las reglas de .gitignore / .codeblastignore"
+                          IsChecked="True"
+                          Foreground="#E8E8F0" FontSize="13"
+                          Margin="0,0,0,8"/>
+
+                <TextBlock Text="Cuando está activado, los archivos y carpetas que coincidan con las reglas de ignore serán excluidos automáticamente."
+                           Foreground="#9090A8" FontSize="12"
+                           TextWrapping="Wrap"
+                           Margin="28,0,0,16"/>
+
+                <CheckBox x:Name="ExcludeCacheCheckBox"
+                          Content="Ocultar archivo de caché (.codeblast-cache.json)"
+                          Foreground="#E8E8F0" FontSize="13"
+                          Margin="0,0,0,8"/>
+
+                <!-- Formato de Salida -->
+                <TextBlock Text="Formato de Salida" 
+                           Foreground="#E8E8F0" FontSize="16" FontWeight="SemiBold"
+                           Margin="0,24,0,12"/>
+
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,4">
+                    <RadioButton x:Name="FormatXmlRadio" Content="XML-Like (&lt;file path=...&gt;)" 
+                                 Foreground="#E8E8F0" FontSize="13" Margin="0,0,24,0"/>
+                    <RadioButton x:Name="FormatMdRadio" Content="Markdown (```...```)" 
+                                 Foreground="#E8E8F0" FontSize="13"/>
+                </StackPanel>
+
+                <TextBlock Text="Define cómo se envuelven los archivos al generar el output. El conteo de tokens se ajustará automáticamente a esta elección."
+                           Foreground="#9090A8" FontSize="12" TextWrapping="Wrap" Margin="0,0,0,16"/>
+
+                <Border Background="#22222A" BorderBrush="#3A3A4A" BorderThickness="1" CornerRadius="6" Padding="16" Margin="0,16,0,0">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Grid.Column="0" VerticalAlignment="Center">
+                            <TextBlock Text="Reglas Personalizadas del Proyecto" Foreground="#E8E8F0" FontSize="14" FontWeight="SemiBold"/>
+                            <TextBlock Text="Edita el archivo .codeblastignore para ignorar archivos y carpetas específicas en este proyecto."
+                                       Foreground="#9090A8" FontSize="12" TextWrapping="Wrap" Margin="0,4,16,0"/>
+                        </StackPanel>
+                        <Button Grid.Column="1" x:Name="EditIgnoreBtn" Content="📝 Editar .codeblastignore" Click="EditIgnore_Click"
+                                Background="#2C2C38" Foreground="#E8E8F0" Padding="12,8" BorderThickness="1" BorderBrush="#3A3A4A" Cursor="Hand"/>
+                    </Grid>
+                </Border>
+            </StackPanel>
+        </Border>
+
+        <!-- Bottom buttons -->
+        <Border Grid.Row="2" Background="#22222A" Padding="16" 
+                BorderBrush="#3A3A4A" BorderThickness="0,1,0,0">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                <Button Content="Cancelar" Click="Cancel_Click"
+                        Background="Transparent" Foreground="#9090A8" 
+                        Padding="16,8" Margin="0,0,8,0"
+                        BorderThickness="1" BorderBrush="#3A3A4A" 
+                        Cursor="Hand" FontSize="13"/>
+                <Button Content="Guardar" Click="Save_Click"
+                        Background="#6E6EFF" Foreground="White" 
+                        Padding="16,8"
+                        BorderThickness="0" 
+                        Cursor="Hand" FontSize="13"/>
+            </StackPanel>
+        </Border>
+    </Grid>
+</Window>
