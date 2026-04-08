@@ -162,7 +162,9 @@ dotnet publish CodeBlast.App/CodeBlast.App.csproj -c Release -r win-x64 --self-c
 
 CodeBlast es una herramienta gratuita y de código abierto. La desarrollamos para solucionar un problema real en nuestro flujo de trabajo diario.
 
-Si esta herramienta te está ahorrando horas de copiar y pegar código, o te ha ayudado a destrabar un problema arquitectónico grave con tu LLM favorito, **considera invitarnos un café** usando el botón **"☕ Apoyar"** en la aplicación. ¡Cada grano de café se convierte en líneas de código!
+Si esta herramienta te está ahorrando horas de copiar y pegar código, o te ha ayudado a destrabar un problema arquitectónico grave con tu LLM favorito, **considera invitarnos un café** usando el botón **"☕ Apoyar"** en la aplicación, o directamente a través del siguiente enlace. ¡Cada grano de café se convierte en líneas de código!
+
+[![Apoyar en Gumroad](https://img.shields.io/badge/Apoyar_en-Gumroad-ff90e8?style=for-the-badge&logo=gumroad&logoColor=black)](https://frkl81.gumroad.com/l/CodeBlast)
 
 ---
 
