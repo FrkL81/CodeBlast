@@ -6,8 +6,9 @@ namespace CodeBlast.Core.Services;
 
 public static class Logger
 {
+    private static bool _isEnabled = false; 
+    private static readonly string _logFolder; 
     private static readonly string LogFile;
-    private static bool _isEnabled = false;
     private static readonly object _lock = new();
 
     public static bool IsEnabled
@@ -32,17 +33,8 @@ public static class Logger
         }
         catch { root = Directory.GetCurrentDirectory(); }
 
-        var logFolder = Path.Combine(root, "logs");
-        LogFile = Path.Combine(logFolder, $"log_{DateTime.Now:yyyyMMdd}.txt");
-
-        try
-        {
-            if (!Directory.Exists(logFolder))
-            {
-                Directory.CreateDirectory(logFolder);
-            }
-        }
-        catch { }
+        _logFolder = Path.Combine(root, "logs");
+        LogFile = Path.Combine(_logFolder, $"log_{DateTime.Now:yyyyMMdd}.txt");
     }
 
     public static void Log(string message, string level = "INFO")
@@ -51,6 +43,8 @@ public static class Logger
 
         try
         {
+            if (!Directory.Exists(_logFolder)) Directory.CreateDirectory(_logFolder);
+
             var logLine = $"[{DateTime.Now:yyyy-MM-dd HH:mm:ss}] [{level}] {message}{Environment.NewLine}";
             lock (_lock)
             {
@@ -72,6 +66,8 @@ public static class Logger
 
         try
         {
+            if (!Directory.Exists(_logFolder)) Directory.CreateDirectory(_logFolder);
+
             var logLine = $"[{DateTime.Now:yyyy-MM-dd HH:mm:ss}] [{level}] {message}{Environment.NewLine}";
             await File.AppendAllTextAsync(LogFile, logLine);
         }

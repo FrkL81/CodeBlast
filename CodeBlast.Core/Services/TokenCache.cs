@@ -16,6 +16,7 @@ public class TokenCache
     public void Initialize(string projectPath)
     {
         _cachePath = Path.Combine(projectPath, ".codeblast-cache.json");
+        _entries.Clear(); // NUEVO: Limpiar memoria residual de proyectos anteriores
     }
 
     public int? TryGet(string fullPath)
@@ -59,7 +60,13 @@ public class TokenCache
 
     public async Task LoadAsync()
     {
-        if (string.IsNullOrEmpty(_cachePath) || !File.Exists(_cachePath)) return;
+        if (string.IsNullOrEmpty(_cachePath)) return;
+
+        if (!File.Exists(_cachePath))
+        {
+            _entries.Clear(); // NUEVO: Si no hay caché previo, asegurar inicio limpio
+            return;
+        }
 
         try
         {
@@ -68,7 +75,7 @@ public class TokenCache
         }
         catch 
         { 
-            _entries = new(); 
+            _entries.Clear(); // MODIFICADO: Usar Clear en lugar de instanciar de nuevo
         }
     }
 }
